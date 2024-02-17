@@ -2,7 +2,7 @@ package pers.xyj.modules.common.utils;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import pers.xyj.modules.market.domain.entity.LoginUser;
+import pers.xyj.modules.accountKeeper.domain.entity.LoginUser;
 
 public class SecurityUtils
 {

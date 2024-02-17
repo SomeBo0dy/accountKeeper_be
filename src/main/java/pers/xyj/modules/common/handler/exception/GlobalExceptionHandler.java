@@ -4,9 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import pers.xyj.modules.accountKeeper.domain.ResponseResult;
 import pers.xyj.modules.common.enums.AppHttpCodeEnum;
 import pers.xyj.modules.common.exception.SystemException;
-import pers.xyj.modules.market.domain.ResponseResult;
+
 
 @RestControllerAdvice//Controller爆出异常会在这里处理，并添加到响应体
 @Slf4j

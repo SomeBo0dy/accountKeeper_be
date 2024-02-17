@@ -7,9 +7,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
+import pers.xyj.modules.accountKeeper.domain.entity.LoginUser;
+import pers.xyj.modules.accountKeeper.service.UserLoginService;
 import pers.xyj.modules.common.utils.RedisCache;
-import pers.xyj.modules.market.domain.entity.LoginUser;
-import pers.xyj.modules.market.service.UserLoginService;
 
 import java.util.Objects;
 

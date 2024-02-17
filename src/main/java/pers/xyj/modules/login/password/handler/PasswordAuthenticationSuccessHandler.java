@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import pers.xyj.modules.accountKeeper.domain.ResponseResult;
+import pers.xyj.modules.accountKeeper.domain.entity.LoginUser;
+import pers.xyj.modules.accountKeeper.domain.vo.UserInfoVo;
+import pers.xyj.modules.accountKeeper.domain.vo.UserLoginVo;
 import pers.xyj.modules.auth.mapper.MenuMapper;
 import pers.xyj.modules.common.utils.BeanCopyUtils;
 import pers.xyj.modules.common.utils.JwtUtil;
 import pers.xyj.modules.common.utils.RedisCache;
-import pers.xyj.modules.market.domain.ResponseResult;
-import pers.xyj.modules.market.domain.entity.LoginUser;
-import pers.xyj.modules.market.domain.vo.UserInfoVo;
-import pers.xyj.modules.market.domain.vo.UserLoginVo;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

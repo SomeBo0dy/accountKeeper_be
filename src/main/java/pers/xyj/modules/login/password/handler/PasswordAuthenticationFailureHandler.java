@@ -5,8 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
+import pers.xyj.modules.accountKeeper.domain.ResponseResult;
 import pers.xyj.modules.common.enums.AppHttpCodeEnum;
-import pers.xyj.modules.market.domain.ResponseResult;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
