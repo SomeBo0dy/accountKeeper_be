@@ -19,7 +19,7 @@ import java.util.List;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
 
-    @Select(" SELECT u.id, u.nick_name, u.avatar, u.sex, u.type, r.name type_name, u.state, u.phone_number, u.introduction ,u.good_count, reject_count" +
+    @Select(" SELECT u.id, u.nick_name, u.avatar, u.sex, u.type, r.name type_name, u.state, u.phone_number, u.introduction " +
             " FROM sys_user u " +
             " LEFT JOIN sys_user_role ur ON ur.user_id = u.id " +
             " LEFT JOIN sys_role r ON r.id = ur.role_id " +

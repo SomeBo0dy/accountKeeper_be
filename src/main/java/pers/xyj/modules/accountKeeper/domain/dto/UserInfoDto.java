@@ -21,8 +21,6 @@ public class UserInfoDto {
     @ApiModelProperty(value = "手机号")
     private String phoneNumber;
 
-    @ApiModelProperty(value = "QQ号")
-    private String qqNumber;
     //个人简介
     @ApiModelProperty(value = "用户个人简介")
     private String introduction;

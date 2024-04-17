@@ -19,6 +19,7 @@ import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
 import pers.xyj.modules.common.filter.JwtAuthenticationTokenFilter;
 import pers.xyj.modules.login.password.PasswordAuthenticationSecurityConfig;
+import pers.xyj.modules.login.phone.PhoneAuthenticationSecurityConfig;
 
 
 @Configuration
@@ -32,7 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
-
+    @Lazy
+    @Autowired
+    private PhoneAuthenticationSecurityConfig phoneAuthenticationSecurityConfig;
     @Lazy
     @Autowired
     private PasswordAuthenticationSecurityConfig passwordAuthenticationSecurityConfig;
@@ -63,6 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 //关闭csrf
                 .csrf().disable()
+                //使用自定义的手机登录过滤器
+                .apply(phoneAuthenticationSecurityConfig).and()
                 //使用自定义的账号密码过滤器
                 .apply(passwordAuthenticationSecurityConfig).and()
                 //不通过Session获取SecurityContext
@@ -76,12 +81,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/websocket").anonymous()
 //                .antMatchers("/goods/**").anonymous()
                 .antMatchers("/logout").authenticated()
-                .antMatchers("/chatUserLink").authenticated()
-                .antMatchers("/chatMessage").authenticated()
                 .antMatchers("/user/**").authenticated()
                 .antMatchers("/users/userinfo").authenticated()
                 .antMatchers("/upload/**").authenticated()
                 .antMatchers("/users/userInfo").authenticated()
+                .antMatchers("/books").authenticated()
+                .antMatchers("/records").authenticated()
+                .antMatchers("/types").authenticated()
+                .antMatchers("/bookUsers").authenticated()
                 .antMatchers("/sys/**").access("hasAuthority('system:admin')")
 
 

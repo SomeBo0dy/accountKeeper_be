@@ -19,6 +19,5 @@ public class SysUserInfoVo {
 
     //个人简介
     private String introduction;
-    private Long goodCount;
-    private Long rejectCount;
+
 }

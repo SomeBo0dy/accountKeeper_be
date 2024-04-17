@@ -22,9 +22,6 @@ public class User {
     //主键@TableId
     @TableId(type = IdType.AUTO)
     private Long id;
-
-    //账号
-    private String account;
     //昵称
     private String nickName;
     //密码
@@ -33,7 +30,6 @@ public class User {
     private String type;
     //账号状态（0正常 1停用）
     private String state;
-    private String qqNumber;
     //手机号
     private String phoneNumber;
     //用户性别
@@ -42,8 +38,7 @@ public class User {
     private String avatar;
     //个人简介
     private String introduction;
-    private Long goodCount;
-    private Long rejectCount;
+
     //创建时间
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;

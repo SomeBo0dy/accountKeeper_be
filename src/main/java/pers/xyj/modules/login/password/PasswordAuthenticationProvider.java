@@ -41,7 +41,7 @@ public class PasswordAuthenticationProvider implements AuthenticationProvider {
         String type = (String) token.getType();
         LoginUser loginUser = loginService.getByPasswordAndType(account, password, type);
         if (Objects.isNull(loginUser)) {
-            throw new BadCredentialsException("账号或密码错误");
+            throw new BadCredentialsException("手机号或密码错误");
         }
         if (!STATUS_NORMAL.equals(loginUser.getUser().getState())) {
             throw new BadCredentialsException("账号已被锁定");

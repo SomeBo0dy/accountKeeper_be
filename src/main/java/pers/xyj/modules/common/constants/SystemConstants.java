@@ -33,6 +33,7 @@ public class SystemConstants
     public static final String ASC = "0";
 
     public static final String STATUS_BLOCK = "1";
+    public static final Integer CODE_TIMEOUT = 15 * 60;
 
     public static final Map<String, String> TYPE_MAP = new HashMap<>(); //Map.of(IS_USER, "用户", IS_WORKER, "第三方", IS_ADMIN, "管理员");
     public static final Object MANGER = "管理员";

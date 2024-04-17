@@ -17,12 +17,9 @@ public class UserInfoVo {
     private String typeName;
     //账号状态（0正常 1停用）
     private String state;
-    private String qqNumber;
 
     //手机号
     private String phoneNumber;
     //个人简介
     private String introduction;
-    private Long goodCount;
-    private Long rejectCount;
 }
