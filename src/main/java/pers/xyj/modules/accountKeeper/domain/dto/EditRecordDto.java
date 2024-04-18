@@ -14,11 +14,7 @@ public class EditRecordDto {
 
     private Double amount;
 
-    private String type;
-
-    private Integer bId;
+    private Integer tId;
 
     private String description;
-
-    private Date createTime;
 }

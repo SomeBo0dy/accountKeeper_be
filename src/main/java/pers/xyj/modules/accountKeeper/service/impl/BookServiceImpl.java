@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import pers.xyj.modules.accountKeeper.domain.ResponseResult;
 import pers.xyj.modules.accountKeeper.domain.dto.AddBookDto;
+import pers.xyj.modules.accountKeeper.domain.dto.EditBookDto;
 import pers.xyj.modules.accountKeeper.domain.entity.BookUser;
 import pers.xyj.modules.accountKeeper.domain.vo.BookVo;
 import pers.xyj.modules.accountKeeper.domain.vo.PageVo;
@@ -72,7 +73,8 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
     }
 
     @Override
-    public ResponseResult editBook(Book book) {
+    public ResponseResult editBook(EditBookDto bookDto) {
+        Book book = BeanCopyUtils.copeBean(bookDto, Book.class);
         int update = bookMapper.updateById(book);
         if (update != 1){
             throw new SystemException(AppHttpCodeEnum.ERROR);

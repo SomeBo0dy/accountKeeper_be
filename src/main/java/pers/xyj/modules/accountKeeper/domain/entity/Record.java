@@ -37,4 +37,7 @@ public class Record {
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date updateTime;
 }

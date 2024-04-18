@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pers.xyj.modules.accountKeeper.domain.ResponseResult;
 import pers.xyj.modules.accountKeeper.domain.dto.AddBookDto;
+import pers.xyj.modules.accountKeeper.domain.dto.EditBookDto;
 import pers.xyj.modules.accountKeeper.domain.entity.Book;
 import pers.xyj.modules.accountKeeper.service.BookService;
 import pers.xyj.modules.common.annotation.SystemLog;
@@ -41,7 +42,7 @@ public class BookController {
     @ApiOperation(value = "编辑账本")
     @SystemLog(businessName = "编辑账本")
     @PutMapping
-    public ResponseResult editBook(@RequestBody Book book){
+    public ResponseResult editBook(@RequestBody EditBookDto book){
         return bookService.editBook(book);
     }
 

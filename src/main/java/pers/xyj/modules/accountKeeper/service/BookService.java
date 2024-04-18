@@ -3,6 +3,7 @@ package pers.xyj.modules.accountKeeper.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import pers.xyj.modules.accountKeeper.domain.ResponseResult;
 import pers.xyj.modules.accountKeeper.domain.dto.AddBookDto;
+import pers.xyj.modules.accountKeeper.domain.dto.EditBookDto;
 import pers.xyj.modules.accountKeeper.domain.entity.Book;
 
 import java.util.Date;
@@ -14,7 +15,7 @@ public interface BookService extends IService<Book> {
 
     ResponseResult deleteBook(Integer id);
 
-    ResponseResult editBook(Book book);
+    ResponseResult editBook(EditBookDto book);
 
     ResponseResult getBooks(Integer pageNum, Integer pageSize);
 
