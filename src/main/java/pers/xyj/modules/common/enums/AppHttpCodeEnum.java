@@ -6,8 +6,11 @@ public enum AppHttpCodeEnum {
     // 登录
     ERROR(404, "操作失败"),
 
+    NEED_LOGIN(401001, "需要登录后操作"),
+    NEED_REFRESH_TOKEN(401002, "token过期，请刷新token"),
+    REFRESH_EXPIRED_NEED_LOGIN(401003, "refreshToken过期，需要登录后操作"),
     // 登录
-    NEED_LOGIN(401, "需要登录后操作"),
+
     NO_OPERATOR_AUTH(403, "无权限操作"),
     ACCOUNT_NOT_NULL(400100, "账号不得为空"),
     CODE_NOT_NULL(400102, "验证码不得为空"),

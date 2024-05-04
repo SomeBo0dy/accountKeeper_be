@@ -6,4 +6,5 @@ import pers.xyj.modules.accountKeeper.domain.ResponseResult;
 
 public interface UploadService {
     ResponseResult uploadImg(MultipartFile img);
+    String upLoad(MultipartFile img);
 }

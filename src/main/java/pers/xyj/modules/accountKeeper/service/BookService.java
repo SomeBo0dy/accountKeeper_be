@@ -28,5 +28,7 @@ public interface BookService extends IService<Book> {
     ResponseResult outputBook(Integer bookId, Date startTime, Date endTime);
 
     ResponseResult searchBookByName(String search, Integer pageNum, Integer pageSize);
+
+    ResponseResult getBookStatistics(Integer bookId);
 }
 

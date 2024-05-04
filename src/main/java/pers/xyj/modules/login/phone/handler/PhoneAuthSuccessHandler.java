@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import static pers.xyj.modules.common.constants.SystemConstants.ROLE_MAP;
+import static pers.xyj.modules.common.utils.JwtUtil.REFRESH_JWT_TTL;
 
 
 @Slf4j
@@ -41,8 +42,10 @@ public class PhoneAuthSuccessHandler extends SavedRequestAwareAuthenticationSucc
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         String userId = loginUser.getUser().getId().toString();
         String jwt = JwtUtil.createJWT(userId);
+        String refreshJwt = JwtUtil.createJWT("refresh:" + userId, REFRESH_JWT_TTL);
         //把用户信息存入redis
-        redisCache.setCacheObject("login:" + userId, loginUser);
+        redisCache.setCacheObject("access_token:" + userId, loginUser);
+        redisCache.setCacheObject("refresh_token:" + userId, loginUser);
         //把token和userInfo封装，返回
         //把User转换成UserInfoVo
         UserInfoVo userInfoVo = BeanCopyUtils.copeBean(loginUser.getUser(), UserInfoVo.class);
@@ -50,7 +53,7 @@ public class PhoneAuthSuccessHandler extends SavedRequestAwareAuthenticationSucc
 //        List<MenuVo> auths =  roleMapper.getMenuList(ROLE_MAP.get(loginUser.getUser().getType()));
 //        List<MenuVo> auths = menuMapper.selectMenuByUserId(loginUser.getUser().getId());
 //        UserLoginVo vo = new UserLoginVo(jwt, userInfoVo, auths);
-        UserLoginVo vo = new UserLoginVo(jwt, userInfoVo);
+        UserLoginVo vo = new UserLoginVo(jwt, refreshJwt, userInfoVo);
         PrintWriter out = response.getWriter();
         out.write(JSONObject.toJSONString(ResponseResult.okResult(vo)));
         out.flush();

@@ -6,7 +6,11 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import pers.xyj.modules.accountKeeper.domain.entity.Book;
+import pers.xyj.modules.accountKeeper.domain.vo.BookStatisticsVo;
 import pers.xyj.modules.accountKeeper.domain.vo.BookVo;
+import pers.xyj.modules.accountKeeper.domain.vo.TypeNameAndCountVo;
+
+import java.util.ArrayList;
 
 @Mapper
 public interface BookMapper extends BaseMapper<Book> {
@@ -22,5 +26,12 @@ public interface BookMapper extends BaseMapper<Book> {
             "WHERE bu.u_id = #{uId} AND b.name LIKE CONCAT('%',#{search},'%') " +
             "ORDER BY b.create_time Desc ")
     IPage<Book> getBooksByUserIdLikeName(IPage<Book> page, @Param("uId") Long userId, @Param("search") String search);
+    @Select("SELECT t.id as typeId, t.name as typeName, count(*) as count, sum(r.amount) as amount " +
+            "FROM ak_type t " +
+            "LEFT JOIN ak_record r ON t.id = r.t_id " +
+            "WHERE r.b_id = #{bookId} " +
+            "GROUP BY t.id")
+    ArrayList<TypeNameAndCountVo> getBookStatistics(@Param("bookId")Integer bookId);
+
 }
 

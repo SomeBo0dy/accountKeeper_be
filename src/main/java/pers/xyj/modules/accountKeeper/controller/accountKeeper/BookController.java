@@ -52,6 +52,12 @@ public class BookController {
     public ResponseResult getBooks(Integer pageNum, Integer pageSize){
         return bookService.getBooks(pageNum,pageSize);
     }
+    @ApiOperation(value="获取账本统计信息")
+    @SystemLog(businessName = "获取账本统计信息")
+    @GetMapping("/statistics/{bookId}")
+    public ResponseResult getBookStatistics(@PathVariable("bookId") Integer bookId){
+        return bookService.getBookStatistics(bookId);
+    }
 
     @ApiOperation(value="邀请他人共享账本")
     @SystemLog(businessName = "邀请他人共享账本")

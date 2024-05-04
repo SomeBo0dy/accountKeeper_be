@@ -8,17 +8,17 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 import pers.xyj.modules.accountKeeper.domain.ResponseResult;
-import pers.xyj.modules.accountKeeper.domain.dto.PasswordDto;
-import pers.xyj.modules.accountKeeper.domain.dto.SelectUserPageDto;
-import pers.xyj.modules.accountKeeper.domain.dto.StateDto;
-import pers.xyj.modules.accountKeeper.domain.dto.UserInfoDto;
+import pers.xyj.modules.accountKeeper.domain.dto.*;
 import pers.xyj.modules.accountKeeper.domain.entity.User;
 import pers.xyj.modules.accountKeeper.domain.vo.PageVo;
 import pers.xyj.modules.accountKeeper.domain.vo.SysUserInfoVo;
 import pers.xyj.modules.accountKeeper.domain.vo.UserInfoVo;
 import pers.xyj.modules.accountKeeper.mapper.UserMapper;
+import pers.xyj.modules.accountKeeper.service.UploadService;
 import pers.xyj.modules.accountKeeper.service.UserService;
 import pers.xyj.modules.auth.mapper.RoleMapper;
 import pers.xyj.modules.common.enums.AppHttpCodeEnum;
@@ -26,6 +26,7 @@ import pers.xyj.modules.common.exception.SystemException;
 import pers.xyj.modules.common.utils.BeanCopyUtils;
 import pers.xyj.modules.common.utils.SecurityUtils;
 
+import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,19 +47,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private UserMapper userMapper;
 
-
+    @Autowired
+    private UploadService uploadService;
 
     @Override
-    public ResponseResult editUserInfo(UserInfoDto userInfoDto) {
+    @Transactional
+    public ResponseResult editUserInfo(MultipartFile avatarFile, String nickName, String introduction) {
         Long id = SecurityUtils.getLoginUser().getUser().getId();
+        String avatarUrl = uploadService.upLoad(avatarFile);
+
         LambdaUpdateWrapper<User> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.eq(User::getId, id);
-        updateWrapper.set(User::getAvatar, userInfoDto.getAvatar());
-        updateWrapper.set(User::getIntroduction, userInfoDto.getIntroduction());
-        updateWrapper.set(User::getNickName, userInfoDto.getNickName());
-        updateWrapper.set(User::getSex, userInfoDto.getSex());
-        this.update(updateWrapper);
-        return ResponseResult.okResult();
+        updateWrapper.set(User::getAvatar, avatarUrl);
+        updateWrapper.set(User::getIntroduction, introduction);
+        updateWrapper.set(User::getNickName, nickName);
+        userMapper.update(null, updateWrapper);
+        User user = this.getById(id);
+        UserInfoVo userInfoVo = BeanCopyUtils.copeBean(user, UserInfoVo.class);
+        userInfoVo.setTypeName(roleMapper.selectById(ROLE_MAP.get(user.getType())).getName());
+        return ResponseResult.okResult(userInfoVo);
     }
 
     @Override
@@ -160,6 +167,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return ResponseResult.okResult();
     }
 
+    @Override
+    public ResponseResult editUserInfoString(EditUserInfoDto editUserInfoDto) {
+        Long id = SecurityUtils.getLoginUser().getUser().getId();
+        LambdaUpdateWrapper<User> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(User::getId, id);
+        updateWrapper.set(User::getIntroduction, editUserInfoDto.getIntroduction());
+        updateWrapper.set(User::getNickName, editUserInfoDto.getNickName());
+        userMapper.update(null, updateWrapper);
+        User user = this.getById(id);
+        UserInfoVo userInfoVo = BeanCopyUtils.copeBean(user, UserInfoVo.class);
+        userInfoVo.setTypeName(roleMapper.selectById(ROLE_MAP.get(user.getType())).getName());
+        return ResponseResult.okResult(userInfoVo);
+    }
 
 
 }

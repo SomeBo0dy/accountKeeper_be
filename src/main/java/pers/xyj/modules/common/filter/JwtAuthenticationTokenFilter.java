@@ -2,6 +2,7 @@ package pers.xyj.modules.common.filter;
 
 import com.alibaba.fastjson.JSON;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,10 +38,21 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             filterChain.doFilter(request,response);
             return;
         }
+        String requestURL = request.getRequestURL().toString();
+        //如果是请求刷新token的请求则放行
+        if (requestURL.startsWith("/token/refresh")){
+            filterChain.doFilter(request,response);
+            return;
+        }
         //解析获取userId
         Claims claims = null;
         try {
             claims = JwtUtil.parseJWT(token);
+        } catch (ExpiredJwtException expiredJwtException){
+            expiredJwtException.printStackTrace();
+            ResponseResult result = ResponseResult.errorResult(AppHttpCodeEnum.NEED_REFRESH_TOKEN);
+            WebUtils.renderString(response, JSON.toJSONString(result));
+            return;
         } catch (Exception e) {
             e.printStackTrace();
             ResponseResult result = ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN);

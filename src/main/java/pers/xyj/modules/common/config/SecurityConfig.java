@@ -81,6 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/websocket").anonymous()
 //                .antMatchers("/goods/**").anonymous()
                 .antMatchers("/logout").authenticated()
+                .antMatchers("/token/refresh").authenticated()
                 .antMatchers("/user/**").authenticated()
                 .antMatchers("/users/userinfo").authenticated()
                 .antMatchers("/upload/**").authenticated()

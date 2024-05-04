@@ -5,7 +5,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pers.xyj.modules.accountKeeper.domain.ResponseResult;
+import pers.xyj.modules.accountKeeper.domain.dto.EditUserInfoDto;
 import pers.xyj.modules.accountKeeper.domain.dto.PasswordDto;
 import pers.xyj.modules.accountKeeper.domain.dto.UserInfoDto;
 import pers.xyj.modules.accountKeeper.service.UserService;
@@ -27,11 +29,16 @@ public class UserController {
     }
 
     @ApiOperation(value = "更新用户信息")
-    @SystemLog(businessName = "更新用户信息")
     @PutMapping("/info")
     @PreAuthorize("hasAuthority('user:info:update')")
-    public ResponseResult editUserInfo(@RequestBody UserInfoDto userInfoDto) {
-        return userService.editUserInfo(userInfoDto);
+    public ResponseResult editUserInfo(@RequestPart("avatarFile") MultipartFile avatarFile, @RequestParam("nickName") String nickName, @RequestParam("introduction") String introduction) {
+        return userService.editUserInfo(avatarFile, nickName, introduction);
+    }
+    @ApiOperation(value = "更新用户信息")
+    @PutMapping("/infoString")
+    @PreAuthorize("hasAuthority('user:info:update')")
+    public ResponseResult editUserInfoString(@RequestBody EditUserInfoDto editUserInfoDto) {
+        return userService.editUserInfoString(editUserInfoDto);
     }
 
     @ApiOperation(value = "获取用户个人信息")

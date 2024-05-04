@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
 
+import static pers.xyj.modules.common.utils.JwtUtil.REFRESH_JWT_TTL;
+
 
 @Slf4j
 @Component
@@ -37,12 +39,14 @@ public class PasswordAuthenticationSuccessHandler extends SavedRequestAwareAuthe
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         String userId = loginUser.getUser().getId().toString();
         String jwt = JwtUtil.createJWT(userId);
+        String refreshJwt = JwtUtil.createJWT("refresh:" + userId, REFRESH_JWT_TTL);
         //把用户信息存入redis
-        redisCache.setCacheObject("login:" + userId, loginUser,24, TimeUnit.HOURS);
+        redisCache.setCacheObject("access_token:" + userId, loginUser);
+        redisCache.setCacheObject("refresh_token:" + userId, loginUser);
         //把token和userInfo封装，返回
         //把User转换成UserInfoVo
         UserInfoVo userInfoVo = BeanCopyUtils.copeBean(loginUser.getUser(), UserInfoVo.class);
-        UserLoginVo vo = new UserLoginVo(jwt, userInfoVo);
+        UserLoginVo vo = new UserLoginVo(jwt,refreshJwt, userInfoVo);
         PrintWriter out = response.getWriter();
         out.write(JSONObject.toJSONString(ResponseResult.okResult(vo)));
         out.flush();

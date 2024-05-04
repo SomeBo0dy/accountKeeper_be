@@ -42,6 +42,11 @@ public class CosUploadServiceImpl implements UploadService {
 
     @Override
     public ResponseResult uploadImg(MultipartFile img) {
+        String url = upLoad(img);
+        return ResponseResult.okResult(url);
+    }
+    @Override
+    public String upLoad(MultipartFile img){
         //判断文件类型
         //获取原始文件名
         String originalFilename = img.getOriginalFilename();
@@ -51,9 +56,8 @@ public class CosUploadServiceImpl implements UploadService {
         }
         String filePath = PathUtils.generateFilePath(originalFilename);
         String url = uploadCos(img, filePath);
-        return ResponseResult.okResult(url);
+        return url;
     }
-
     // 创建 TransferManager 实例，这个实例用来后续调用高级接口
     private TransferManager createTransferManager() {
         // 创建一个 COSClient 实例，这是访问 COS 服务的基础实例。

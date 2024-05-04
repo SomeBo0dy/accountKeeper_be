@@ -1,11 +1,9 @@
 package pers.xyj.modules.accountKeeper.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.web.multipart.MultipartFile;
 import pers.xyj.modules.accountKeeper.domain.ResponseResult;
-import pers.xyj.modules.accountKeeper.domain.dto.PasswordDto;
-import pers.xyj.modules.accountKeeper.domain.dto.SelectUserPageDto;
-import pers.xyj.modules.accountKeeper.domain.dto.StateDto;
-import pers.xyj.modules.accountKeeper.domain.dto.UserInfoDto;
+import pers.xyj.modules.accountKeeper.domain.dto.*;
 import pers.xyj.modules.accountKeeper.domain.entity.User;
 
 
@@ -15,7 +13,7 @@ import pers.xyj.modules.accountKeeper.domain.entity.User;
 public interface UserService extends IService<User> {
 
 
-    ResponseResult editUserInfo(UserInfoDto userInfoDto);
+    ResponseResult editUserInfo(MultipartFile avatarFile, String nickName, String introduction);
 
     ResponseResult editPassword(PasswordDto passwordDto);
 
@@ -31,4 +29,5 @@ public interface UserService extends IService<User> {
 
     ResponseResult sysCancelAccount(Long userId);
 
+    ResponseResult editUserInfoString(EditUserInfoDto editUserInfoDto);
 }
