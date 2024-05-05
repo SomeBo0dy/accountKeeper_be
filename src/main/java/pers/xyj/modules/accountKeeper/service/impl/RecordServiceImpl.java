@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.Objects;
 
 
-@Data
 @Slf4j
 @Service
 public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> implements RecordService {
@@ -53,7 +52,7 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
         Record record = BeanCopyUtils.copeBean(recordDto, Record.class);
         record.setCreateDate(new Date(recordDto.getTimeInMillis()));
         int insert = recordMapper.insert(record);
-        if (insert != 1){
+        if (insert != 1) {
             throw new SystemException(AppHttpCodeEnum.ERROR);
         }
         return ResponseResult.okResult();
@@ -62,7 +61,7 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
     @Override
     public ResponseResult deleteRecord(Long id) {
         int delete = recordMapper.deleteById(id);
-        if (delete != 1){
+        if (delete != 1) {
             throw new SystemException(AppHttpCodeEnum.ERROR);
         }
         return ResponseResult.okResult();
@@ -72,7 +71,7 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
     public ResponseResult editRecord(EditRecordDto editRecordDto) {
         Record record = BeanCopyUtils.copeBean(editRecordDto, Record.class);
         int update = recordMapper.updateById(record);
-        if (update != 1){
+        if (update != 1) {
             throw new SystemException(AppHttpCodeEnum.ERROR);
         }
         return ResponseResult.okResult();
@@ -80,10 +79,10 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
 
     @Override
     public ResponseResult getRecords(Long bookId, Integer type, Date date, Integer pageNum, Integer pageSize) {
-        LambdaQueryWrapper<Record>  queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(!Objects.isNull(bookId),Record::getBId, bookId);
-        queryWrapper.eq(!Objects.isNull(type),Record::getTId, type);
-        if (!Objects.isNull(date)){
+        LambdaQueryWrapper<Record> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(!Objects.isNull(bookId), Record::getBId, bookId);
+        queryWrapper.eq(!Objects.isNull(type), Record::getTId, type);
+        if (!Objects.isNull(date)) {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
@@ -108,7 +107,7 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
     @Override
     public ResponseResult addRecordList(List<AddRecordDto> recordDtos) {
         List<Record> records = BeanCopyUtils.copyBeanList(recordDtos, Record.class);
-        records.stream().forEach( record -> recordMapper.insert(record) );
+        records.stream().forEach(record -> recordMapper.insert(record));
         return ResponseResult.okResult();
     }
 
@@ -122,10 +121,10 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
         BookUser bookUser = bookUserMapper.selectOne(lambdaQueryWrapper);
         Integer bookId = bookUser.getBId();
         Book book = bookMapper.selectById(bookId);
-        LambdaQueryWrapper<Record>  queryWrapper = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<Record> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Record::getBId, bookId);
-        queryWrapper.eq(!Objects.isNull(tId),Record::getTId, tId);
-        if (!Objects.isNull(date)){
+        queryWrapper.eq(!Objects.isNull(tId), Record::getTId, tId);
+        if (!Objects.isNull(date)) {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
@@ -139,7 +138,7 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
         recordMapper.getTopBookRecords(page, queryWrapper);
 
         PageVo pageVo = new PageVo(page.getRecords(), page.getPages(), page.getTotal());
-        BookAndRecordVo bookAndRecordVo = new  BookAndRecordVo(book.getId(),book.getName(),book.getDescription(),pageVo);
+        BookAndRecordVo bookAndRecordVo = new BookAndRecordVo(book.getId(), book.getName(), book.getCreateBy(), book.getDescription(), pageVo);
         return ResponseResult.okResult(bookAndRecordVo);
     }
 }

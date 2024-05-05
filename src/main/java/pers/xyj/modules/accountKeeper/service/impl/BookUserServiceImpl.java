@@ -19,7 +19,6 @@ import pers.xyj.modules.common.utils.SecurityUtils;
 import java.util.ArrayList;
 
 
-@Data
 @Slf4j
 @Service
 public class BookUserServiceImpl extends ServiceImpl<BookUserMapper, BookUser> implements BookUserService {

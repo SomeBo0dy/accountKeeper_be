@@ -18,6 +18,7 @@ import pers.xyj.modules.auth.mapper.MenuMapper;
 import pers.xyj.modules.auth.mapper.UserRoleMapper;
 import pers.xyj.modules.common.utils.BeanCopyUtils;
 import pers.xyj.modules.common.utils.RedisCache;
+import pers.xyj.modules.common.utils.SecurityUtils;
 
 
 import java.util.List;
@@ -44,12 +45,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 
     @Override
     public ResponseResult logout() {
-        //获取token
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        //获取userId
-        Long userId = loginUser.getUser().getId();
-        //删除redis中的id
+        Long userId = SecurityUtils.getUserId();
         redisCache.deleteObject("login:" + userId);
         return ResponseResult.okResult();
     }

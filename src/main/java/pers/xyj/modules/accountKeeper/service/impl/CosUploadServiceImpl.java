@@ -31,7 +31,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Service
-@Data
 @ConfigurationProperties(prefix = "cos")
 public class CosUploadServiceImpl implements UploadService {
     private String secretId;

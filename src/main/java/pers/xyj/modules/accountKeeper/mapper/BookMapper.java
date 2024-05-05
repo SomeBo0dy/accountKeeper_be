@@ -18,13 +18,13 @@ public interface BookMapper extends BaseMapper<Book> {
             "FROM ak_book b " +
             "JOIN ak_book_user bu ON b.id = bu.b_id " +
             "WHERE bu.u_id = #{uId} " +
-            "ORDER BY bu.priority Desc ")
+            "ORDER BY bu.priority Desc, b.update_time DESC ")
     IPage<BookVo> getBooksByUserId(IPage<BookVo> page, @Param("uId") Long userId);
     @Select("SELECT b.id, b.name, b.description, b.create_by, b.create_time " +
             "FROM ak_book b " +
             "JOIN ak_book_user bu ON b.id = bu.b_id " +
             "WHERE bu.u_id = #{uId} AND b.name LIKE CONCAT('%',#{search},'%') " +
-            "ORDER BY b.create_time Desc ")
+            "ORDER BY b.create_time Desc, b.update_time DESC ")
     IPage<Book> getBooksByUserIdLikeName(IPage<Book> page, @Param("uId") Long userId, @Param("search") String search);
     @Select("SELECT t.id as typeId, t.name as typeName, count(*) as count, sum(r.amount) as amount " +
             "FROM ak_type t " +

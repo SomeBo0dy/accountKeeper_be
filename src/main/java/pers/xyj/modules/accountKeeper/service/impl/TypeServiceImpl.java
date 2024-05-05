@@ -18,7 +18,7 @@ import java.util.List;
  * @author makejava
  * @since 2024-04-16 13:02:33
  */
-@Data
+
 @Slf4j
 @Service
 public class TypeServiceImpl extends ServiceImpl<TypeMapper, Type> implements TypeService {

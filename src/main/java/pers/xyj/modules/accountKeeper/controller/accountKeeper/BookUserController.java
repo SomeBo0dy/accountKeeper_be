@@ -26,7 +26,7 @@ public class BookUserController {
     @ApiOperation(value = "编辑账本优先级")
     @SystemLog(businessName = "编辑账本优先级")
     @PutMapping("/priority")
-    public ResponseResult editBooksPriority(@RequestBody ArrayList<BookPriorityDto> priorityDto){
+    public ResponseResult editBooksPriority(@RequestBody ArrayList<BookPriorityDto> priorityDto) {
         return bookUserService.editBooksPriority(priorityDto);
     }
 }

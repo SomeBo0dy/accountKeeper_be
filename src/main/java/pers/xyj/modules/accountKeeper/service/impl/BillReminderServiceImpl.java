@@ -23,7 +23,6 @@ import pers.xyj.modules.common.utils.SecurityUtils;
 
 import java.util.List;
 
-@Data
 @Slf4j
 @Service
 public class BillReminderServiceImpl extends ServiceImpl<BillReminderMapper, BillReminder> implements BillReminderService {

@@ -10,26 +10,24 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-@SuppressWarnings("serial")
+/**
+ * (ShareCode)表实体类
+ *
+ * @author makejava
+ * @since 2024-05-05 00:27:46
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("ak_book_user")
-public class BookUser {
+@TableName("ak_share_code")
+public class ShareCode {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    private Long uId;
-
     private Integer bId;
 
-    private Integer priority;
+    private String shareCode;
 
-    public BookUser(Long uId, Integer bId, Integer priority){
-        this.uId = uId;
-        this.bId = bId;
-        this.priority = priority;
-    }
+    private Integer sharedCount;
 
 }
-

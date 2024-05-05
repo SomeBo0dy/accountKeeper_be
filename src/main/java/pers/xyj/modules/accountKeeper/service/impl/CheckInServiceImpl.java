@@ -16,7 +16,6 @@ import pers.xyj.modules.common.utils.SecurityUtils;
 
 import java.util.List;
 
-@Data
 @Slf4j
 @Service
 public class CheckInServiceImpl extends ServiceImpl<CheckInMapper, CheckIn> implements CheckInService {

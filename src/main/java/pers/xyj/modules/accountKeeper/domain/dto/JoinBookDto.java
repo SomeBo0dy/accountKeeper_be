@@ -5,12 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class AddBookDto {
-    private String name;
-    //描绘
-    private String description;
-
-    private Integer priority;
+@AllArgsConstructor
+public class JoinBookDto {
+    private String code;
 }

@@ -11,6 +11,7 @@ import pers.xyj.modules.accountKeeper.domain.entity.Book;
 public class BookAndRecordVo {
     private Integer bId;
     private String name;
+    private Long createBy;
     private String description;
     private PageVo recordPage;
 }

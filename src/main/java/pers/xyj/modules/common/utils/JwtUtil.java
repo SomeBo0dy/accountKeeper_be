@@ -131,14 +131,14 @@ public class JwtUtil {
         }
         String userId = claims.getSubject();
         //从redis中中获取用户信息
-        LoginUser loginUser = redisCache.getCacheObject("login_refresh:" + userId);
+        LoginUser loginUser = redisCache.getCacheObject("refresh_token:" + userId);
         //获取不到
         if (Objects.isNull(loginUser)){
             //说明登录过期
             throw new SystemException(AppHttpCodeEnum.NEED_LOGIN);
         }
         String newJwtToken = JwtUtil.createJWT(userId);
-        String newRefreshJwtToken = JwtUtil.createJWT("refresh:" + userId , REFRESH_JWT_TTL);
+        String newRefreshJwtToken = JwtUtil.createJWT("refresh_token:" + userId , REFRESH_JWT_TTL);
         //把用户信息存入redis
         redisCache.setCacheObject("access_token:" + userId, loginUser);
         redisCache.setCacheObject("refresh_token:" + userId, loginUser);

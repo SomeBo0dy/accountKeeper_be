@@ -18,22 +18,24 @@ public class CheckInController {
     @Autowired
     private CheckInService checkInService;
 
-    @ApiOperation(value="签到")
+    @ApiOperation(value = "签到")
     @SystemLog(businessName = "签到")
     @GetMapping
-    public ResponseResult checkIn(){
+    public ResponseResult checkIn() {
         return checkInService.checkIn();
     }
-    @ApiOperation(value="获取签到记录")
+
+    @ApiOperation(value = "获取签到记录")
     @SystemLog(businessName = "获取签到记录")
     @GetMapping("/list")
-    public ResponseResult getCheckInList(){
+    public ResponseResult getCheckInList() {
         return checkInService.getCheckInList();
     }
-    @ApiOperation(value="获取签到次数")
+
+    @ApiOperation(value = "获取签到次数")
     @SystemLog(businessName = "获取签到次数")
     @GetMapping("/count")
-    public ResponseResult getCheckInCount(){
+    public ResponseResult getCheckInCount() {
         return checkInService.getCheckInCount();
     }
 }

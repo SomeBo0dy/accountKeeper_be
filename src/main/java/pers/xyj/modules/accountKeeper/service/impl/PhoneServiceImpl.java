@@ -23,7 +23,6 @@ import static pers.xyj.modules.common.constants.SystemConstants.CODE_TIMEOUT;
 import static pers.xyj.modules.common.constants.SystemConstants.TYPE_MAP;
 
 
-@Data
 @Slf4j
 @Service
 public class PhoneServiceImpl implements PhoneService {

@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
 @Slf4j
 @Service
 public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements BookService {
@@ -53,7 +52,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
             throw new SystemException(AppHttpCodeEnum.ERROR);
         }
         Long userId = SecurityUtils.getUserId();
-        BookUser bookUser = new BookUser(userId, book.getId());
+        BookUser bookUser = new BookUser(userId, book.getId(), bookDto.getPriority());
         int insertBookUser = bookUserMapper.insert(bookUser);
         if (insertBookUser != 1){
             throw new SystemException(AppHttpCodeEnum.ERROR);
