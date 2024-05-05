@@ -12,6 +12,8 @@ import pers.xyj.modules.accountKeeper.mapper.ShareCodeMapper;
 import pers.xyj.modules.accountKeeper.domain.entity.ShareCode;
 import pers.xyj.modules.accountKeeper.service.ShareCodeService;
 import org.springframework.stereotype.Service;
+import pers.xyj.modules.common.enums.AppHttpCodeEnum;
+import pers.xyj.modules.common.exception.SystemException;
 import pers.xyj.modules.common.utils.SecurityUtils;
 import pers.xyj.modules.common.utils.ShareCodeUtils;
 
@@ -75,7 +77,15 @@ public class ShareCodeServiceImpl extends ServiceImpl<ShareCodeMapper, ShareCode
 
     @Override
     public ResponseResult quitBook(Integer bookId) {
-        return null;
+        Long userId = SecurityUtils.getUserId();
+        LambdaQueryWrapper<BookUser> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(BookUser::getBId, bookId);
+        queryWrapper.eq(BookUser::getUId, userId);
+        int delete = bookUserMapper.delete(queryWrapper);
+        if (delete != 1){
+            throw new SystemException(AppHttpCodeEnum.ERROR);
+        }
+        return ResponseResult.okResult();
     }
 }
 
