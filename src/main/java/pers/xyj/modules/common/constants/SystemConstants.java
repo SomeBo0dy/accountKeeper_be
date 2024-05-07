@@ -14,6 +14,10 @@ public class SystemConstants
     public static final String DESC = "1";
     //升序
     public static final String ASC = "0";
+    public static final String  ACCESS = "access:";
+    public static final String  REFRESH = "refresh:";
+    public static final String  ACCESS_TOKEN = "access_token:";
+    public static final String  REFRESH_TOKEN = "refresh_token:";
 
     public static final String STATUS_BLOCK = "1";
     public static final Integer CODE_TIMEOUT = 15 * 60;

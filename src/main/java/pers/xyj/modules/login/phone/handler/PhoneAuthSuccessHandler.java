@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import static pers.xyj.modules.common.constants.SystemConstants.ROLE_MAP;
+import static pers.xyj.modules.common.constants.SystemConstants.*;
 import static pers.xyj.modules.common.utils.JwtUtil.REFRESH_JWT_TTL;
 
 
@@ -42,10 +42,10 @@ public class PhoneAuthSuccessHandler extends SavedRequestAwareAuthenticationSucc
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         String userId = loginUser.getUser().getId().toString();
         String jwt = JwtUtil.createJWT(userId);
-        String refreshJwt = JwtUtil.createJWT("refresh:" + userId, REFRESH_JWT_TTL);
+        String refreshJwt = JwtUtil.createJWT(userId, REFRESH_JWT_TTL);
         //把用户信息存入redis
-        redisCache.setCacheObject("access_token:" + userId, loginUser);
-        redisCache.setCacheObject("refresh_token:" + userId, loginUser);
+        redisCache.setCacheObject( ACCESS_TOKEN + userId, loginUser);
+        redisCache.setCacheObject( REFRESH_TOKEN + userId, loginUser);
         //把token和userInfo封装，返回
         //把User转换成UserInfoVo
         UserInfoVo userInfoVo = BeanCopyUtils.copeBean(loginUser.getUser(), UserInfoVo.class);

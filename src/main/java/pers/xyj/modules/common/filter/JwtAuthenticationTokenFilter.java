@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
+import static pers.xyj.modules.common.constants.SystemConstants.ACCESS_TOKEN;
+
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
@@ -40,7 +42,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         }
         String requestURL = request.getRequestURL().toString();
         //如果是请求刷新token的请求则放行
-        if (requestURL.startsWith("/token/refresh")){
+        if (requestURL.endsWith("/token/refresh")){
             filterChain.doFilter(request,response);
             return;
         }
@@ -61,7 +63,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         }
         String userId = claims.getSubject();
         //从redis中中获取用户信息
-        LoginUser loginUser = redisCache.getCacheObject("access_token:" + userId);
+        LoginUser loginUser = redisCache.getCacheObject(ACCESS_TOKEN + userId);
         //获取不到
         if (Objects.isNull(loginUser)){
             //说明登录过期

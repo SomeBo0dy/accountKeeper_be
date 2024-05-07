@@ -22,14 +22,11 @@ import java.util.UUID;
 public class JwtUtil {
 
     //有效期为
-    public static final Long JWT_TTL = 1 * 24 * 60 * 60 * 1000L;
+    public static final Long JWT_TTL = 1 * 60 * 1000L;
 
-    public static final Long REFRESH_JWT_TTL = 24 * 60 * 60 * 1000L;
+    public static final Long REFRESH_JWT_TTL = 15 * 24 * 60 * 60 * 1000L;
     //设置秘钥明文
     public static final String JWT_KEY = "xyj";
-
-    @Autowired
-    private static RedisCache redisCache;
 
     public static String getUUID(){
         String token = UUID.randomUUID().toString().replaceAll("-", "");
@@ -113,36 +110,36 @@ public class JwtUtil {
                 .getBody();
     }
 
-    public static RefreshTokenVo refreshToken(String oldRefreshToken) throws Throwable {
-        //解析获取userId
-        Claims claims = null;
-        try {
-            claims = JwtUtil.parseJWT(oldRefreshToken);
-        } catch (ExpiredJwtException expiredJwtException){
-            expiredJwtException.printStackTrace();
-            Throwable ne = new SystemException(AppHttpCodeEnum.REFRESH_EXPIRED_NEED_LOGIN);
-            ne.initCause(expiredJwtException);
-            throw ne;
-        } catch (Exception e) {
-            e.printStackTrace();
-            Throwable ne = new SystemException(AppHttpCodeEnum.NEED_LOGIN);
-            ne.initCause(e);
-            throw ne;
-        }
-        String userId = claims.getSubject();
-        //从redis中中获取用户信息
-        LoginUser loginUser = redisCache.getCacheObject("refresh_token:" + userId);
-        //获取不到
-        if (Objects.isNull(loginUser)){
-            //说明登录过期
-            throw new SystemException(AppHttpCodeEnum.NEED_LOGIN);
-        }
-        String newJwtToken = JwtUtil.createJWT(userId);
-        String newRefreshJwtToken = JwtUtil.createJWT("refresh_token:" + userId , REFRESH_JWT_TTL);
-        //把用户信息存入redis
-        redisCache.setCacheObject("access_token:" + userId, loginUser);
-        redisCache.setCacheObject("refresh_token:" + userId, loginUser);
-        return new RefreshTokenVo(newJwtToken, newRefreshJwtToken);
-    }
+//    public RefreshTokenVo refreshToken(String oldRefreshToken) throws Throwable {
+//        //解析获取userId
+//        Claims claims = null;
+//        try {
+//            claims = JwtUtil.parseJWT(oldRefreshToken);
+//        } catch (ExpiredJwtException expiredJwtException){
+//            expiredJwtException.printStackTrace();
+//            Throwable ne = new SystemException(AppHttpCodeEnum.REFRESH_EXPIRED_NEED_LOGIN);
+//            ne.initCause(expiredJwtException);
+//            throw ne;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            Throwable ne = new SystemException(AppHttpCodeEnum.NEED_LOGIN);
+//            ne.initCause(e);
+//            throw ne;
+//        }
+//        String userId = claims.getSubject();
+//        //从redis中中获取用户信息
+//        LoginUser loginUser = redisCache.getCacheObject("refresh_token:" + userId);
+//        //获取不到
+//        if (Objects.isNull(loginUser)){
+//            //说明登录过期
+//            throw new SystemException(AppHttpCodeEnum.NEED_LOGIN);
+//        }
+//        String newJwtToken = JwtUtil.createJWT(userId);
+//        String newRefreshJwtToken = JwtUtil.createJWT("refresh_token:" + userId , REFRESH_JWT_TTL);
+//        //把用户信息存入redis
+//        redisCache.setCacheObject("access_token:" + userId, loginUser);
+//        redisCache.setCacheObject("refresh_token:" + userId, loginUser);
+//        return new RefreshTokenVo(newJwtToken, newRefreshJwtToken);
+//    }
 
 }

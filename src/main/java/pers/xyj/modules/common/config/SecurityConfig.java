@@ -80,7 +80,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users/register").anonymous()
                 .antMatchers("/websocket").anonymous()
                 .antMatchers("/logout").authenticated()
-                .antMatchers("/token/refresh").authenticated()
+                //存疑
+                .antMatchers("/token/refresh").anonymous()
                 .antMatchers("/shareCode").authenticated()
                 .antMatchers("/user/**").authenticated()
                 .antMatchers("/users/userinfo").authenticated()
