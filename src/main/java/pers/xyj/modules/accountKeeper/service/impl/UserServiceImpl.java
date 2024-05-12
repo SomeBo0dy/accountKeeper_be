@@ -55,7 +55,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public ResponseResult editUserInfo(MultipartFile avatarFile, String nickName, String introduction) {
         Long id = SecurityUtils.getLoginUser().getUser().getId();
         String avatarUrl = uploadService.upLoad(avatarFile);
-
         LambdaUpdateWrapper<User> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.eq(User::getId, id);
         updateWrapper.set(User::getAvatar, avatarUrl);

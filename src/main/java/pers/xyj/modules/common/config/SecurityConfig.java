@@ -88,6 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/upload/**").authenticated()
                 .antMatchers("/users/userInfo").authenticated()
                 .antMatchers("/books").authenticated()
+                .antMatchers("/smartKeep").authenticated()
                 .antMatchers("/records").authenticated()
                 .antMatchers("/types").authenticated()
                 .antMatchers("/bookUsers").authenticated()
