@@ -22,7 +22,7 @@ import java.util.UUID;
 public class JwtUtil {
 
     //有效期为
-    public static final Long JWT_TTL = 1 * 60 * 1000L;
+    public static final Long JWT_TTL = 3 * 60 * 60 * 1000L;
 
     public static final Long REFRESH_JWT_TTL = 15 * 24 * 60 * 60 * 1000L;
     //设置秘钥明文

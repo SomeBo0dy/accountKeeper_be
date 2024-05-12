@@ -10,7 +10,10 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookStatisticsVo {
-    private Integer recordCountTotal;
-    private Double recordAmountTotal;
-    private ArrayList<TypeNameAndCountVo> typeList;
+    private Integer incomeCount;
+    private Integer outcomeCount;
+    private Double incomeAmountSum;
+    private Double outcomeAmountSum;
+    private ArrayList<TypeNameAndCountVo> incomeStatistics;
+    private ArrayList<TypeNameAndCountVo> outcomeStatistics;
 }

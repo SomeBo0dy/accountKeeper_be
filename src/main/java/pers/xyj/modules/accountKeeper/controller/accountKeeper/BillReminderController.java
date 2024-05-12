@@ -14,6 +14,8 @@ import pers.xyj.modules.accountKeeper.service.BillReminderService;
 import org.springframework.web.bind.annotation.*;
 import pers.xyj.modules.common.annotation.SystemLog;
 
+import java.util.Date;
+
 
 @Api(value = "BillReminderControllerApi", tags = {"账单提醒操作接口"})
 @RestController
@@ -47,7 +49,7 @@ public class BillReminderController {
     @ApiOperation(value = "获取账单提醒")
     @SystemLog(businessName = "获取账单提醒")
     @GetMapping
-    public ResponseResult getBillReminders(Integer pageNum, Integer pageSize) {
-        return billReminderService.getBillReminders(pageNum, pageSize);
+    public ResponseResult getBillReminders(Date date, Integer pageNum, Integer pageSize) {
+        return billReminderService.getBillReminders(date, pageNum, pageSize);
     }
 }

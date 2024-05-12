@@ -28,5 +28,7 @@ public class BookVo {
 
     private Integer memberCount;
 
-    private Double amount;
+    private Double incomeAmount;
+
+    private Double outcomeAmount;
 }

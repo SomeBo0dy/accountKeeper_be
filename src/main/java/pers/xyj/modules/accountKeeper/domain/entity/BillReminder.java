@@ -2,9 +2,7 @@ package pers.xyj.modules.accountKeeper.domain.entity;
 
 import java.util.Date;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,11 +20,11 @@ public class BillReminder {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    private Long uId;
-
     private String billName;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date reminderTime;
 
+    @TableField(fill = FieldFill.INSERT)
+    private Long createBy;
 }

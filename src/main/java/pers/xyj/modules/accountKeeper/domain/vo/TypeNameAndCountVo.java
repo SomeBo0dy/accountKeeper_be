@@ -11,5 +11,6 @@ public class TypeNameAndCountVo {
     private Integer typeId;
     private String typeName;
     private Integer count;
+    private Integer isIncome;
     private Double amount;
 }

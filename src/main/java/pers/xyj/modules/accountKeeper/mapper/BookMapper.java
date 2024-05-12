@@ -26,7 +26,7 @@ public interface BookMapper extends BaseMapper<Book> {
             "WHERE bu.u_id = #{uId} AND b.name LIKE CONCAT('%',#{search},'%') " +
             "ORDER BY b.create_time Desc, b.update_time DESC ")
     IPage<Book> getBooksByUserIdLikeName(IPage<Book> page, @Param("uId") Long userId, @Param("search") String search);
-    @Select("SELECT t.id as typeId, t.name as typeName, count(*) as count, sum(r.amount) as amount " +
+    @Select("SELECT t.id as typeId, t.name as typeName, t.is_income, count(*) as count, sum(r.amount) as amount " +
             "FROM ak_type t " +
             "LEFT JOIN ak_record r ON t.id = r.t_id " +
             "WHERE r.b_id = #{bookId} " +

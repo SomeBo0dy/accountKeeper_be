@@ -95,8 +95,10 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
             LambdaQueryWrapper<BookUser> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(BookUser::getBId,id);
             Integer memberCount = bookUserMapper.selectCount(queryWrapper);
-            Double sumAmount = recordMapper.getSumByBookId(id);
-            item.setAmount(sumAmount);
+            Double incomeAmount = recordMapper.getIncomeAmountByBookId(id);
+            Double outcomeAmount = recordMapper.getOutcomeAmountByBookId(id);
+            item.setIncomeAmount(incomeAmount);
+            item.setOutcomeAmount(outcomeAmount);
             item.setMemberCount(memberCount);
         }
         PageVo pageVo = new PageVo(bookVos, page.getPages(), page.getTotal());
@@ -139,13 +141,24 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
     @Override
     public ResponseResult getBookStatistics(Integer bookId) {
         ArrayList<TypeNameAndCountVo> statistics =  bookMapper.getBookStatistics(bookId);
-        int countSum = 0;
-        Double amountSum = 0.0;
+        int incomeCount = 0;
+        int outcomeCount = 0;
+        Double incomeAmountSum = 0.0;
+        Double outcomeAmountSum = 0.0;
+        ArrayList<TypeNameAndCountVo> incomeStatistics = new ArrayList<>();
+        ArrayList<TypeNameAndCountVo> outcomeStatistics = new ArrayList<>();
         for (TypeNameAndCountVo item : statistics) {
-            countSum += item.getCount();
-            amountSum += item.getAmount();
+            if (item.getIsIncome() == 1){
+                incomeCount += item.getCount();
+                incomeAmountSum += item.getAmount();
+                incomeStatistics.add(item);
+            }else {
+                outcomeCount += item.getCount();
+                outcomeAmountSum += item.getAmount();
+                outcomeStatistics.add(item);
+            }
         }
-        BookStatisticsVo bookStatisticsVo = new BookStatisticsVo(countSum, amountSum, statistics);
+        BookStatisticsVo bookStatisticsVo = new BookStatisticsVo(incomeCount, outcomeCount, incomeAmountSum, outcomeAmountSum, incomeStatistics, outcomeStatistics);
         return ResponseResult.okResult(bookStatisticsVo);
     }
 }

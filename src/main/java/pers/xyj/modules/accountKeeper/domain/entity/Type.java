@@ -25,6 +25,8 @@ public class Type {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
+    private Integer isIncome;
+
     private String name;
 
     private String imgUrl;

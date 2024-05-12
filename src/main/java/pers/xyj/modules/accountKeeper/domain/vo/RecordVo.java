@@ -18,6 +18,8 @@ public class RecordVo {
 
     private Integer tId;
 
+    private Integer isIncome;
+
     private String typeName;
 
     private String imgUrl;
