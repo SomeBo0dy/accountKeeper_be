@@ -133,10 +133,9 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
                     .ge(Record::getCreateDate, format.format(date))
                     .le(Record::getCreateDate, format.format(calendar.getTime()));
         }
-        queryWrapper.orderByDesc(Record::getCreateDate);
+        queryWrapper.orderByDesc(Record::getCreateDate, Record::getCreateTime);
         IPage<RecordVo> page = new Page<>(pageNum, pageSize);
         recordMapper.getTopBookRecords(page, queryWrapper);
-
         PageVo pageVo = new PageVo(page.getRecords(), page.getPages(), page.getTotal());
         BookAndRecordVo bookAndRecordVo = new BookAndRecordVo(book.getId(), book.getName(), book.getCreateBy(), book.getDescription(), pageVo);
         return ResponseResult.okResult(bookAndRecordVo);
