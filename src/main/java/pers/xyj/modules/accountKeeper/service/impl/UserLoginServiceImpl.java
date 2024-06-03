@@ -52,14 +52,14 @@ public class UserLoginServiceImpl implements UserLoginService {
 
 
     @Override
-    public LoginUser getByPasswordAndType(String phoneNumber, String password, String type) {
+    public LoginUser getByPasswordAndType(String phone, String password, String type) {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(User::getPhoneNumber, phoneNumber);
+        queryWrapper.eq(User::getPhoneNumber, phone);
         queryWrapper.eq(User::getType, type);
         User user = userService.getOne(queryWrapper);
         if (Objects.isNull(user)) {
             LambdaQueryWrapper<User> queryWrapper2 = new LambdaQueryWrapper<>();
-            queryWrapper2.eq(User::getPhoneNumber, phoneNumber);
+            queryWrapper2.eq(User::getPhoneNumber, phone);
             queryWrapper2.eq(User::getType, type);
             user = userService.getOne(queryWrapper2);
         }

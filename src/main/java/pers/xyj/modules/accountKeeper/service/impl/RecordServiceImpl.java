@@ -14,6 +14,7 @@ import pers.xyj.modules.accountKeeper.domain.dto.AddRecordDto;
 import pers.xyj.modules.accountKeeper.domain.dto.EditRecordDto;
 import pers.xyj.modules.accountKeeper.domain.entity.Book;
 import pers.xyj.modules.accountKeeper.domain.entity.BookUser;
+import pers.xyj.modules.accountKeeper.domain.entity.User;
 import pers.xyj.modules.accountKeeper.domain.vo.BookAndRecordVo;
 import pers.xyj.modules.accountKeeper.domain.vo.PageVo;
 import pers.xyj.modules.accountKeeper.domain.vo.RecordVo;
@@ -21,6 +22,7 @@ import pers.xyj.modules.accountKeeper.mapper.BookMapper;
 import pers.xyj.modules.accountKeeper.mapper.BookUserMapper;
 import pers.xyj.modules.accountKeeper.mapper.RecordMapper;
 import pers.xyj.modules.accountKeeper.domain.entity.Record;
+import pers.xyj.modules.accountKeeper.mapper.UserMapper;
 import pers.xyj.modules.accountKeeper.service.RecordService;
 import org.springframework.stereotype.Service;
 import pers.xyj.modules.common.enums.AppHttpCodeEnum;
@@ -43,7 +45,8 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
 
     @Autowired
     private BookUserMapper bookUserMapper;
-
+    @Autowired
+    private UserMapper userMapper;
     @Autowired
     private BookMapper bookMapper;
 
@@ -136,7 +139,14 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
         queryWrapper.orderByDesc(Record::getCreateDate, Record::getCreateTime);
         IPage<RecordVo> page = new Page<>(pageNum, pageSize);
         recordMapper.getTopBookRecords(page, queryWrapper);
-        PageVo pageVo = new PageVo(page.getRecords(), page.getPages(), page.getTotal());
+        List<RecordVo> records = page.getRecords();
+        for (RecordVo vo:
+             records) {
+            Long createBy = vo.getCreateBy();
+            User user = userMapper.selectById(createBy);
+            vo.setNickName(user.getNickName());
+        }
+        PageVo pageVo = new PageVo(records, page.getPages(), page.getTotal());
         BookAndRecordVo bookAndRecordVo = new BookAndRecordVo(book.getId(), book.getName(), book.getCreateBy(), book.getDescription(), pageVo);
         return ResponseResult.okResult(bookAndRecordVo);
     }

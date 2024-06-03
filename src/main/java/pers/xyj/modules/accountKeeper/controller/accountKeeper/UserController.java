@@ -57,5 +57,11 @@ public class UserController {
         return userService.cancelAccount();
     }
 
-
+    @ApiOperation(value = "获取用户记账天数")
+    @SystemLog(businessName = "获取用户记账天数")
+    @GetMapping("/checkIn")
+    @PreAuthorize("hasAuthority('user:info:list')")
+    public ResponseResult getUserCheckInCount() {
+        return userService.getUserCheckInCount();
+    }
 }

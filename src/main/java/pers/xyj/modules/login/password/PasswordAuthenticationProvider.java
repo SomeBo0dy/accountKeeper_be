@@ -33,15 +33,15 @@ public class PasswordAuthenticationProvider implements AuthenticationProvider {
             return null;
         }
         PasswordAuthenticationToken token = (PasswordAuthenticationToken) authentication;
-        //获取邮箱
-        String account = (String) authentication.getPrincipal();
-        //获取验证码
+
+        String phone = (String) authentication.getPrincipal();
+
         String password = (String) authentication.getCredentials();
         //获取登录类型
         String type = (String) token.getType();
-        LoginUser loginUser = loginService.getByPasswordAndType(account, password, type);
+        LoginUser loginUser = loginService.getByPasswordAndType(phone, password, type);
         if (Objects.isNull(loginUser)) {
-            throw new BadCredentialsException("手机号或密码错误");
+            throw new BadCredentialsException("账号或密码错误");
         }
         if (!STATUS_NORMAL.equals(loginUser.getUser().getState())) {
             throw new BadCredentialsException("账号已被锁定");

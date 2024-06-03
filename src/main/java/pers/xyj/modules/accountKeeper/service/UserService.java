@@ -30,4 +30,6 @@ public interface UserService extends IService<User> {
     ResponseResult sysCancelAccount(Long userId);
 
     ResponseResult editUserInfoString(EditUserInfoDto editUserInfoDto);
+
+    ResponseResult getUserCheckInCount();
 }

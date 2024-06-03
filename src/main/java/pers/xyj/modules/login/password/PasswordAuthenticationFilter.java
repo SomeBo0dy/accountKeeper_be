@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class    PasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
-    private final String ACCOUNT = "account";
+    private final String ACCOUNT = "phone";
 
     private final String PASSWORD = "password";
 
@@ -44,19 +44,19 @@ public class    PasswordAuthenticationFilter extends AbstractAuthenticationProce
         if (!request.getContentType().contains(MediaType.APPLICATION_JSON_VALUE)) {
             throw new AuthenticationServiceException("参数不是json：" + request.getMethod());
         }
-        String account = "";
+        String phone = "";
         String password = "";
         String type = "";
         try {
             Map<String, String> map = JSONObject.parseObject(request.getInputStream(), Map.class);
-            account = map.get(ACCOUNT);
+            phone = map.get(ACCOUNT);
             password = map.get(PASSWORD);
             type = map.get(TYPE);
         } catch (IOException e) {
             throw new AuthenticationServiceException("参数不正确：" + request.getMethod());
         }
-        if (account == null) {
-            throw new BadCredentialsException("账号参数缺失");
+        if (phone == null) {
+            throw new BadCredentialsException("手机号参数缺失");
         }
         if (password == null) {
             throw new BadCredentialsException("密码参数缺失");
@@ -64,9 +64,9 @@ public class    PasswordAuthenticationFilter extends AbstractAuthenticationProce
         if (type == null) {
             throw new BadCredentialsException("角色类型参数缺失");
         }
-        account = account.trim();
+        phone = phone.trim();
         password = password.trim();
-        PasswordAuthenticationToken authenticationToken = new PasswordAuthenticationToken(account, password, type);
+        PasswordAuthenticationToken authenticationToken = new PasswordAuthenticationToken(phone, password, type);
         setDetails(request, authenticationToken);
         //交给 AuthenticationManager 进行认证
         return this.getAuthenticationManager().authenticate(authenticationToken);

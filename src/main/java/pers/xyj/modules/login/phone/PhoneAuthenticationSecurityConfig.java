@@ -23,12 +23,12 @@ public class PhoneAuthenticationSecurityConfig extends SecurityConfigurerAdapter
 
     @Override
     public void configure(HttpSecurity builder) throws Exception {
-        PhoneCodeAuthenticationFilter emailCodeAuthenticationFilter = new PhoneCodeAuthenticationFilter();
-        emailCodeAuthenticationFilter.setAuthenticationManager(builder.getSharedObject(AuthenticationManager.class));
-        emailCodeAuthenticationFilter.setAuthenticationSuccessHandler(phoneAuthSuccessHandler);
-        emailCodeAuthenticationFilter.setAuthenticationFailureHandler(phoneAuthFailureHandler);
+        PhoneCodeAuthenticationFilter phoneCodeAuthenticationFilter = new PhoneCodeAuthenticationFilter();
+        phoneCodeAuthenticationFilter.setAuthenticationManager(builder.getSharedObject(AuthenticationManager.class));
+        phoneCodeAuthenticationFilter.setAuthenticationSuccessHandler(phoneAuthSuccessHandler);
+        phoneCodeAuthenticationFilter.setAuthenticationFailureHandler(phoneAuthFailureHandler);
 
         builder.authenticationProvider(phoneCodeAuthenticationProvider);
-        builder.addFilterAfter(emailCodeAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        builder.addFilterAfter(phoneCodeAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

@@ -7,23 +7,23 @@ import java.util.Collection;
 
 public class PasswordAuthenticationToken extends AbstractAuthenticationToken {
 
-    private final Object account;
+    private final Object phone;
 
     private Object password;
 
     private Object type;
 
-    public PasswordAuthenticationToken(Object account, Object password, Object type, Collection<? extends GrantedAuthority> authorities) {
+    public PasswordAuthenticationToken(Object phone, Object password, Object type, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
-        this.account = account;
+        this.phone = phone;
         this.password = password;
         this.type = type;
         super.setAuthenticated(true);
     }
 
-    public PasswordAuthenticationToken(String account, String password, String type) {
+    public PasswordAuthenticationToken(String phone, String password, String type) {
         super(null);
-        this.account = account;
+        this.phone = phone;
         this.password = password;
         this.type = type;
         setAuthenticated(false);
@@ -36,7 +36,7 @@ public class PasswordAuthenticationToken extends AbstractAuthenticationToken {
 
     @Override
     public Object getPrincipal() {
-        return account;
+        return phone;
     }
 
     public Object getType() {

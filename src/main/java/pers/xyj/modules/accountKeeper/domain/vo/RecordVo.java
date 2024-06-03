@@ -25,4 +25,9 @@ public class RecordVo {
     private String imgUrl;
 
     private String description;
+
+    private Long createBy;
+    private String nickName;
+
+
 }

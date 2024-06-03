@@ -50,9 +50,6 @@ public class PhoneAuthSuccessHandler extends SavedRequestAwareAuthenticationSucc
         //把User转换成UserInfoVo
         UserInfoVo userInfoVo = BeanCopyUtils.copeBean(loginUser.getUser(), UserInfoVo.class);
         userInfoVo.setTypeName(roleMapper.selectById(ROLE_MAP.get(loginUser.getUser().getType())).getName());
-//        List<MenuVo> auths =  roleMapper.getMenuList(ROLE_MAP.get(loginUser.getUser().getType()));
-//        List<MenuVo> auths = menuMapper.selectMenuByUserId(loginUser.getUser().getId());
-//        UserLoginVo vo = new UserLoginVo(jwt, userInfoVo, auths);
         UserLoginVo vo = new UserLoginVo(jwt, refreshJwt, userInfoVo);
         PrintWriter out = response.getWriter();
         out.write(JSONObject.toJSONString(ResponseResult.okResult(vo)));

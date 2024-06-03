@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@Data
 @Service
 @ConfigurationProperties(prefix = "cos")
 public class CosUploadServiceImpl implements UploadService {

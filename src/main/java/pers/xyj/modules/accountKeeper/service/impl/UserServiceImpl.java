@@ -17,6 +17,7 @@ import pers.xyj.modules.accountKeeper.domain.entity.User;
 import pers.xyj.modules.accountKeeper.domain.vo.PageVo;
 import pers.xyj.modules.accountKeeper.domain.vo.SysUserInfoVo;
 import pers.xyj.modules.accountKeeper.domain.vo.UserInfoVo;
+import pers.xyj.modules.accountKeeper.mapper.RecordMapper;
 import pers.xyj.modules.accountKeeper.mapper.UserMapper;
 import pers.xyj.modules.accountKeeper.service.UploadService;
 import pers.xyj.modules.accountKeeper.service.UserService;
@@ -47,6 +48,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private RecordMapper recordMapper;
     @Autowired
     private UploadService uploadService;
 
@@ -180,5 +183,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return ResponseResult.okResult(userInfoVo);
     }
 
-
+    @Override
+    public ResponseResult getUserCheckInCount() {
+        Long userId = SecurityUtils.getUserId();
+        int count = recordMapper.getUserCheckInCount(userId);
+        return ResponseResult.okResult(count);
+    }
 }

@@ -12,6 +12,8 @@ import java.util.Date;
 public class SmartKeepRecordVo {
     private Double amount;
 
+    private String shopName;
+
     private String description;
 
     private Date createDate;

@@ -18,7 +18,7 @@ public interface RecordMapper extends BaseMapper<Record> {
             "WHERE b_id = #{id}")
     Double getSumByBookId(@Param("id") Integer id);
 
-    @Select(" SELECT r.id, r.amount, t.id as tId, t.is_income, t.name as typeName, t.img_url, r.description " +
+    @Select(" SELECT r.id, r.amount, t.id as tId, t.is_income, t.name as typeName, t.img_url, r.description, r.create_by  " +
             " FROM ak_record r " +
             " LEFT JOIN ak_type t ON t.id = r.t_id " +
             " ${ew.customSqlSegment} ")
@@ -28,12 +28,17 @@ public interface RecordMapper extends BaseMapper<Record> {
             "FROM ak_record r " +
             "LEFT JOIN ak_type t ON t.id = r.t_id " +
             "WHERE t.is_income = 1 AND b_id = #{id} ")
-    Double getIncomeAmountByBookId(Integer id);
+    Double getIncomeAmountByBookId(@Param("id") Integer id);
 
     @Select("SELECT sum(r.amount) " +
             "FROM ak_record r " +
             "LEFT JOIN ak_type t ON t.id = r.t_id " +
             "WHERE t.is_income = 0 AND b_id = #{id} ")
-    Double getOutcomeAmountByBookId(Integer id);
+    Double getOutcomeAmountByBookId(@Param("id") Integer id);
+
+    @Select(" SELECT COUNT(DISTINCT DATE(create_date)) " +
+            " FROM ak_record " +
+            " WHERE create_by = #{userId} ")
+    int getUserCheckInCount(@Param("userId") Long userId);
 }
 
